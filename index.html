@@ -17,17 +17,15 @@
     multiple controllers within one ng-app
   -->
   <div ng-app='app' ng-controller='mainCtrl'> <!-- [1],[2] -->
-    <h1>Tanner</h1>
+
+    <div ng-repeat='line in chat_history'>
+      <chatline line='line' />
+    </div>
 
     <form name='userForm' ng-submit='submitInput(userForm)'> <!-- [1], [2] -->
       <input placeholder='Type your message here and press enter' ng-model='userForm.input_text' class="MainInput"/> <!-- [3] -->
     </form>
 
-    <ul class='User-list'>
-      <li ng-repeat='user in users'>
-        <avatar user='user' />
-      </li>
-    </ul>
   </div>
 </body>
 </html>

@@ -1,12 +1,19 @@
 angular.module('app', [])
   .controller('mainCtrl', mainCtrl)
-  .directive('avatar', avatarDirective);
+  .directive('chatline', chatlineDirective);
 
 
 function mainCtrl ($scope, $http) {
 
+  $scope.chat_history = [];
+
   $scope.submitInput = function (input) {
     input_text = input.input_text;
+
+    $scope.chat_history.push({
+      text: input_text,
+      author: "User"
+    });
 
     input.input_text = "waiting on a response...";
 
@@ -17,46 +24,25 @@ function mainCtrl ($scope, $http) {
       headers: {'Content-Type': 'application/json'}
     }).then(function(response) {
       console.log(response.data);
+      $scope.chat_history.push({
+        text: response.data,
+        author: "Bot"
+      });
       input.input_text = null;
     });
   }
-
-  // $scope.users = []
-
-  // $scope.addNew = function (user) {
-  //   $scope.users.push({
-  //     name: user.name,
-  //     avatarUrl: user.url,
-  //     email: user.email
-  //   });
-
-  //   user.name = '';
-  //   user.url = '';
-  //   user.email = '';
-  // };
 }
 
-function avatarDirective () {
+function chatlineDirective () {
   return {
     scope: {
-      user: '='
+      line: '='
     },
     restrict: 'E',
     replace: 'true',
     template: (
-      '<div class="Avatar">' +
-        '<img ng-src="{{user.avatarUrl}}" />' +
-        '<h4>{{user.name}}</h4>' +
-        '<h5>{{user.email}}<h5>' +
-      '</div>'
-    ),
-    link: link
+      '<p class="{{line.author}}Line">{{line.text}}</p>'
+    )
   };
-
-  function link (scope) {
-    if (!scope.user.avatarUrl) {
-      scope.user.avatarUrl = 'https://www.drupal.org/files/issues/default-avatar.png';
-    }
-  }
 
 }
