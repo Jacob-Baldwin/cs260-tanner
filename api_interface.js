@@ -1,3 +1,6 @@
+// the length of chat history that tanner puts into the api request
+const MEMORY_LENGTH = 3;
+
 angular.module('app', [])
   .controller('mainCtrl', mainCtrl)
   .directive('chatline', chatlineDirective);
@@ -6,29 +9,46 @@ angular.module('app', [])
 function mainCtrl ($scope, $http) {
 
   $scope.chat_history = [];
+  $scope.submit_active = true;
 
   $scope.submitInput = function (input) {
-    input_text = input.input_text;
+    if (!$scope.submit_active) {
+      return;
+    }
+
+    $scope.submit_active = false;
+
+    input_text = "";
+
+    for (i = Math.max($scope.chat_history.length-MEMORY_LENGTH, 0); i < $scope.chat_history.length; i++) {
+      input_text += " " + $scope.chat_history[i].text;
+    }
+
+    input_text += input.input_text;
 
     $scope.chat_history.push({
-      text: input_text,
+      text: input.input_text,
       author: "User"
     });
 
     input.input_text = "waiting on a response...";
 
+    request_data = {
+      input_text: input_text
+    }
+
     $http({
       method: 'POST',
       url: "http://api.tanner.jacobbaldwin.com",
-      data: '{"input_text": "' + input_text + '"}',
+      data: request_data,
       headers: {'Content-Type': 'application/json'}
     }).then(function(response) {
-      console.log(response.data);
       $scope.chat_history.push({
         text: response.data,
         author: "Bot"
       });
       input.input_text = null;
+      $scope.submit_active = true;
     });
   }
 }
