@@ -1,5 +1,5 @@
 // the length of chat history that tanner puts into the api request
-const MEMORY_LENGTH = 3;
+const MEMORY_LENGTH = 2;
 
 angular.module('app', [])
   .controller('mainCtrl', mainCtrl)
