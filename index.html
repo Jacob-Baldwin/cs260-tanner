@@ -9,23 +9,43 @@
   <title>Tanner</title>
 </head>
 <body>
-  <!--
-    1. ng-app='app' tells angular that everything within this div should function within
-    the scope of a declared angular module with the name of app.
-    2. ng-controller='mainCtrl' tells angular that the scope of this div should be handled
-    by a controller by the name of 'mainCtrl'. In a bigger application you will likely have
-    multiple controllers within one ng-app
-  -->
-  <div ng-app='app' ng-controller='mainCtrl'> <!-- [1],[2] -->
+  <h1>Say Hello To Tanner</h1>
+  <p>
+    Tanner is a personal experiment of mine. He is a chatbot written in python and accessible via a web API.
+    He is trained on data collected primarily from Twitter. Tweets are collected where one user says something
+    and another user replies. This data is stored in the form of a pair of strings: <i>origin-text</i> and <i>response-text</i>.
+  </p>
+  <p>
+    We can think of <i>origin-text</i> as sample input from a user and <i>response-text</i> as what an appropriate response would be for
+    that input. We store as many of these samples of conversation as we can to build up a database of possible responses to possible inputs.
+  </p>
+  <p>
+    For each pair of strings we also calculate a vector representation of each string using a word2vec model. This is done throught the Spacy
+    python module. These vectors are stored along with <i>origin-text</i> and <i>response-text</i>.
+  </p>
+  <p>
+    When an input is supplied here, that input is vectorized using word2vec. And then compared to the vector representation of each
+    <i>origin-text</i> for similarity. We find the <i>origin-text</i> that has the closest vector representation to our user's input and then respond
+    to the user with the <i>response-text</i> that belongs to that <i>origin-text</i>.
+  </p>
+  <p>
+    Try it out! While this bot doesn't always seem to make sense and doesn't really serve much of a purpose, it is a lot of fun.
+  </p>
+
+  <div ng-app='app' ng-controller='mainCtrl' class="ChatArea">
 
     <div ng-repeat='line in chat_history'>
       <chatline line='line' />
     </div>
 
-    <form name='userForm' ng-submit='submitInput(userForm)'> <!-- [1], [2] -->
-      <input placeholder='Type your message here and press enter' ng-model='userForm.input_text' class="MainInput"/> <!-- [3] -->
+    <form name='userForm' ng-submit='submitInput(userForm)'>
+      <input placeholder='Type your message here and press enter' ng-model='userForm.input_text' class="MainInput"/>
     </form>
-
   </div>
+  <p class="Footnote">
+    Please keep in mind that everything the bot says is just data collected from twitter, and has not been censored in any way.<br>
+    Copyright 2018 Jacob Baldwin
+  </p>
+
 </body>
 </html>

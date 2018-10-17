@@ -1,6 +1,8 @@
 body {
   margin: 0;
   padding: 0;
+  align-content: center;
+  text-align: center;
 }
 
 div {
@@ -8,8 +10,37 @@ div {
   padding:0;
 }
 
+p {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.Footnote {
+  font-size: 80%;
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+
+.ChatArea {
+  width: 70%;
+  border: 1px;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  align-content: center;
+  text-align: center;
+  margin: auto;
+  margin-top: 70px;
+}
+
 .MainInput {
-  width: 100%;
+  width: 99%;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 .BotLine {
@@ -18,6 +49,7 @@ div {
   padding: 0;
   width: 100%;
   height: 100%;
+  text-align: left;
 }
 
 .UserLine {
@@ -26,4 +58,5 @@ div {
   padding: 0;
   width: 100%;
   height: 100%;
+  text-align: left;
 }

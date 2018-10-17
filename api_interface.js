@@ -49,6 +49,9 @@ function mainCtrl ($scope, $http) {
       });
       input.input_text = null;
       $scope.submit_active = true;
+    }).catch(function(e) {
+      input.input_text = "unable to get response, please reload the page";
+      console.log(e);
     });
   }
 }
