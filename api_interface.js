@@ -2,21 +2,38 @@ angular.module('app', [])
   .controller('mainCtrl', mainCtrl)
   .directive('avatar', avatarDirective);
 
-function mainCtrl ($scope) {
 
-  $scope.users = []
+function mainCtrl ($scope, $http) {
 
-  $scope.addNew = function (user) {
-    $scope.users.push({
-      name: user.name,
-      avatarUrl: user.url,
-      email: user.email
+  $scope.submitInput = function (input) {
+    input_text = input.input_text;
+
+    input.input_text = "waiting on a response...";
+
+    $http({
+      method: 'POST',
+      url: "http://api.tanner.jacobbaldwin.com",
+      data: '{"input_text": "' + input_text + '"}',
+      headers: {'Content-Type': 'application/json'}
+    }).then(function(response) {
+      console.log(response.data);
+      input.input_text = null;
     });
+  }
 
-    user.name = '';
-    user.url = '';
-    user.email = '';
-  };
+  // $scope.users = []
+
+  // $scope.addNew = function (user) {
+  //   $scope.users.push({
+  //     name: user.name,
+  //     avatarUrl: user.url,
+  //     email: user.email
+  //   });
+
+  //   user.name = '';
+  //   user.url = '';
+  //   user.email = '';
+  // };
 }
 
 function avatarDirective () {

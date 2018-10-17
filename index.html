@@ -17,15 +17,10 @@
     multiple controllers within one ng-app
   -->
   <div ng-app='app' ng-controller='mainCtrl'> <!-- [1],[2] -->
-    <h1>Create new user</h1>
+    <h1>Tanner</h1>
 
-    <form name='userForm' ng-submit='addNew(userForm)'> <!-- [1], [2] -->
-
-      <input placeholder='Name' ng-model='userForm.name'/> <!-- [3] -->
-      <input placeholder='Image Url' ng-model='userForm.url'/>
-      <input placeholder='Email Address' ng-model='userForm.email'/>
-
-      <button type='submit'>Add New</button>
+    <form name='userForm' ng-submit='submitInput(userForm)'> <!-- [1], [2] -->
+      <input placeholder='Type your message here and press enter' ng-model='userForm.input_text' class="MainInput"/> <!-- [3] -->
     </form>
 
     <ul class='User-list'>
